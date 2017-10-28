@@ -34,12 +34,6 @@ namespace Function
             {
                 dynamic parsedBody = JsonConvert.DeserializeObject(input);
 
-                if (!IsAuthKeyPresentAndValid(parsedBody))
-                {
-                    Console.WriteLine("Unauthorized");
-                    return;
-                }
-
                 var postData = BuildMessageData(parsedBody);
                 var topicResponse = SendMessageToTopic("messages", postData);
                 var idsResponse = SendMessageToRegistrationIds(postData);
@@ -54,20 +48,6 @@ namespace Function
             {
                 Console.WriteLine("Please send some data");
             }
-        }
-
-        private bool IsAuthKeyPresentAndValid(dynamic parsedBody)
-        {
-            var authKey = Environment.GetEnvironmentVariable("auth_key");
-
-            if (parsedBody.auth_key == null ||
-                string.IsNullOrWhiteSpace((string)parsedBody.auth_key) ||
-                (string)parsedBody.auth_key != authKey)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private FcmMessageData BuildMessageData(dynamic parsedBody)
