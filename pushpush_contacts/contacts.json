@@ -1,6 +1,6 @@
 [
     {
-        "Name": "Marty McFly",
-        "PhoneNumber": "7145551234"
+        "name": "Marty McFly",
+        "phone_number": "7145551234"
     }
 ]
