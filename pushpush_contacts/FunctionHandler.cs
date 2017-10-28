@@ -21,17 +21,8 @@ namespace Function
 
         private bool IsAuthKeyPresentAndValid(string input)
         {
-            dynamic parsedBody = JsonConvert.DeserializeObject(input);
-            var authKey = Environment.GetEnvironmentVariable("auth_key");
-
-            if (parsedBody.auth_key == null ||
-                string.IsNullOrWhiteSpace((string)parsedBody.auth_key) ||
-                (string)parsedBody.auth_key != authKey)
-            {
-                return false;
-            }
-
-            return true;
+            var authKey = JsonConvert.DeserializeObject<AuthKey>(input);
+            return !(authKey == null || authKey.Key != Environment.GetEnvironmentVariable("auth_key"));
         }
     }
 }
