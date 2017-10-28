@@ -1,0 +1,17 @@
+provider:
+  name: faas
+  gateway: http://localhost:8080
+
+functions:
+  pushpush_messages:
+    lang: csharp
+    handler: ./pushpush_messages
+    image: pushpush_messages
+    environment_file:
+      - env.yml
+  pushpush_contacts:
+    lang: csharp
+    handler: ./pushpush_contacts
+    image: pushpush_contacts
+    environment_file:
+      - env.yml
