@@ -10,15 +10,7 @@ namespace Function
     {
         public void Handle(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                Console.WriteLine("Unauthorized");
-                return;
-            }
-
-            dynamic parsedBody = JsonConvert.DeserializeObject(input);
-
-            if (!IsAuthKeyPresentAndValid(parsedBody))
+            if (string.IsNullOrWhiteSpace(input) || !IsAuthKeyPresentAndValid(input))
             {
                 Console.WriteLine("Unauthorized");
                 return;
@@ -27,8 +19,9 @@ namespace Function
             Console.WriteLine(File.ReadAllText("contacts.json"));
         }
 
-        private bool IsAuthKeyPresentAndValid(dynamic parsedBody)
+        private bool IsAuthKeyPresentAndValid(string input)
         {
+            dynamic parsedBody = JsonConvert.DeserializeObject(input);
             var authKey = Environment.GetEnvironmentVariable("auth_key");
 
             if (parsedBody.auth_key == null ||
